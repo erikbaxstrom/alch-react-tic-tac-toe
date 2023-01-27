@@ -9,7 +9,7 @@ const GameProvider = ({ children }) => {
   const [active, setActive] = useState(false);
 
   const tileClickHandler = (index) => {
-    console.log('handling click on', index);
+    // console.log('handling click on', index);
     // if the tile is filled, return
     if (board[index] !== '') {
       return;
@@ -22,7 +22,7 @@ const GameProvider = ({ children }) => {
     const newBoard = [...board];
     newBoard[index] = currentPlayer;
     setBoard(newBoard);
-    console.log('put', currentPlayer, 'in', index);
+    // console.log('put', currentPlayer, 'in', index);
     // switch player
     if (currentPlayer === 'X') {
       setCurrentPlayer('O');
@@ -32,12 +32,13 @@ const GameProvider = ({ children }) => {
   };
 
   const resetClickHandler = () => {
-    console.log('resetting game');
+    // console.log('resetting game');
     setBoard(['', '', '', '', '', '', '', '', '']);
     setCurrentPlayer('X');
     setGameMessage("X's Turn");
     setActive(true);
   };
+
   return (
     <GameContext.Provider
       value={{
