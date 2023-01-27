@@ -5,8 +5,8 @@ const GameContext = createContext();
 const GameProvider = ({ children }) => {
   const [board, setBoard] = useState(['', 'O', 'X', 'O', '', '', '', '', 'X']);
   const [currentPlayer, setCurrentPlayer] = useState('X');
-  const [gameMessage, setGameMessage] = useState("X's turn");
-  const [active, setActive] = useState(true);
+  const [gameMessage, setGameMessage] = useState("O's turn");
+  const [active, setActive] = useState(false);
 
   const tileClickHandler = (index) => {
     console.log('handling click on', index);
@@ -23,7 +23,6 @@ const GameProvider = ({ children }) => {
     newBoard[index] = currentPlayer;
     setBoard(newBoard);
     console.log('put', currentPlayer, 'in', index);
-
     // switch player
     if (currentPlayer === 'X') {
       setCurrentPlayer('O');
@@ -32,9 +31,24 @@ const GameProvider = ({ children }) => {
     }
   };
 
+  const resetClickHandler = () => {
+    console.log('resetting game');
+    setBoard(['', '', '', '', '', '', '', '', '']);
+    setCurrentPlayer('X');
+    setGameMessage("X's Turn");
+    setActive(true);
+  };
   return (
     <GameContext.Provider
-      value={{ board, setBoard, currentPlayer, gameMessage, active, tileClickHandler }}
+      value={{
+        board,
+        setBoard,
+        currentPlayer,
+        gameMessage,
+        active,
+        tileClickHandler,
+        resetClickHandler,
+      }}
     >
       {children}
     </GameContext.Provider>
