@@ -8,8 +8,14 @@ const GameProvider = ({ children }) => {
   const [gameMessage, setGameMessage] = useState("X's turn");
   const [active, setActive] = useState(true);
 
+  const tileClickHandler = (index) => {
+    console.log('handling click on', index);
+  };
+
   return (
-    <GameContext.Provider value={{ board, setBoard, currentPlayer, gameMessage, active }}>
+    <GameContext.Provider
+      value={{ board, setBoard, currentPlayer, gameMessage, active, tileClickHandler }}
+    >
       {children}
     </GameContext.Provider>
   );
