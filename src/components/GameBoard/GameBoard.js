@@ -1,6 +1,8 @@
+import { useGameContext } from '../../context/GameContext.js';
 import Tile from './Tile/Tile';
 export default function GameBoard() {
-  const board = ['Y', 'booger', '', 'something else'];
+  const { board } = useGameContext();
+
   return (
     <div>
       {board.map((tileContent, index) => (
