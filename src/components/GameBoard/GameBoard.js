@@ -9,7 +9,7 @@ export default function GameBoard() {
   return (
     <div className="gameBoard">
       {board.map((tileContent, index) => (
-        <Tile key={index} {...{ tileContent }} />
+        <Tile key={index} {...{ tileContent, index }} />
       ))}
     </div>
   );
