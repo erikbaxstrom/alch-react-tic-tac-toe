@@ -3,7 +3,7 @@ import { useState, createContext, useContext } from 'react';
 const GameContext = createContext();
 
 const GameProvider = ({ children }) => {
-  const [board, setBoard] = useState(['Y', 'booger', '', 'something else', 'more booger']);
+  const [board, setBoard] = useState(['', '1', '2', '3', '', '5', '', '7', '8']);
   return <GameContext.Provider value={{ board, setBoard }}>{children}</GameContext.Provider>;
 };
 
