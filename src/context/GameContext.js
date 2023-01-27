@@ -10,6 +10,26 @@ const GameProvider = ({ children }) => {
 
   const tileClickHandler = (index) => {
     console.log('handling click on', index);
+    // if the tile is filled, return
+    if (board[index] !== '') {
+      return;
+    }
+    // if the game is inactive, return
+    if (!active) {
+      return;
+    }
+    // otherwise, put the currentPlayer in the tile
+    const newBoard = [...board];
+    newBoard[index] = currentPlayer;
+    setBoard(newBoard);
+    console.log('put', currentPlayer, 'in', index);
+
+    // switch player
+    if (currentPlayer === 'X') {
+      setCurrentPlayer('O');
+    } else {
+      setCurrentPlayer('X');
+    }
   };
 
   return (
