@@ -1,0 +1,7 @@
+.tile {
+  background-color: white;
+}
+
+.disableClick {
+  pointer-events: none;
+}
