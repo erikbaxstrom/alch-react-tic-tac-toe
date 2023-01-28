@@ -1,12 +1,37 @@
-import { useState, createContext, useContext } from 'react';
+import { useState, createContext, useContext, useEffect } from 'react';
 
 const GameContext = createContext();
 
 const GameProvider = ({ children }) => {
-  const [board, setBoard] = useState(['', 'O', 'X', 'O', '', '', '', '', 'X']);
+  const [board, setBoard] = useState(['', '', '', '', '', '', '', '', '']);
   const [currentPlayer, setCurrentPlayer] = useState('X');
-  const [gameMessage, setGameMessage] = useState("O's turn");
-  const [active, setActive] = useState(false);
+  const [gameMessage, setGameMessage] = useState("X's turn. Click to start.");
+  const [active, setActive] = useState(true);
+
+  const checkGameStatus = () => {
+    if (!active) return;
+    // console.log('checking game status');
+    //check for new game
+    if (board.every((tileContent) => tileContent === '')) {
+      return;
+    }
+    //check for cats game
+    if (board.every((tileContent) => tileContent !== '')) {
+      //   console.log('cat');
+      setGameMessage("Cat's Game");
+      setActive(false);
+      return;
+    }
+    //check for winner
+
+    // return;
+  };
+
+  checkGameStatus();
+
+  //   useEffect(() => {
+  //     setGameMessage(`${currentPlayer} Turn`);
+  //   }, [currentPlayer]);
 
   const tileClickHandler = (index) => {
     // console.log('handling click on', index);
@@ -23,12 +48,21 @@ const GameProvider = ({ children }) => {
     newBoard[index] = currentPlayer;
     setBoard(newBoard);
     // console.log('put', currentPlayer, 'in', index);
+
+    if (!active) {
+      //   console.log('inactive game. returning');
+      return;
+    }
     // switch player
     if (currentPlayer === 'X') {
       setCurrentPlayer('O');
+      setGameMessage("O's Turn");
     } else {
       setCurrentPlayer('X');
+      setGameMessage("X's Turn");
     }
+
+    // console.log('Message set to', currentPlayer);
   };
 
   const resetClickHandler = () => {
