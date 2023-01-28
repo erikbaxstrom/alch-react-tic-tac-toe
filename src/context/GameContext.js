@@ -8,6 +8,30 @@ const GameProvider = ({ children }) => {
   const [gameMessage, setGameMessage] = useState("X's turn. Click to start.");
   const [active, setActive] = useState(true);
 
+  const checkWinner = () => {
+    // if (board[0] === board[1] && board[1] === board[2] && board[0] !== '') {
+    //   return board[0];
+    // } else {
+    //   return;
+    // }
+    const winConditions = [
+      [0, 1, 2],
+      [3, 4, 5],
+    ];
+    let winner = null;
+    if (
+      winConditions.some((condition) => {
+        const [a, b, c] = condition;
+        if (board[a] === board[b] && board[b] === board[c] && board[a] !== '') {
+          winner = board[a];
+          return true;
+        }
+      })
+    ) {
+      return winner;
+    }
+  };
+
   const checkGameStatus = () => {
     if (!active) return;
     // console.log('checking game status');
@@ -23,7 +47,11 @@ const GameProvider = ({ children }) => {
       return;
     }
     //check for winner
-
+    const winner = checkWinner();
+    if (winner) {
+      setGameMessage(`${winner} won!`);
+      setActive(false);
+    }
     // return;
   };
 
