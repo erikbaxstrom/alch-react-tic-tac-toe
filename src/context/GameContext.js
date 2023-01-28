@@ -9,27 +9,25 @@ const GameProvider = ({ children }) => {
   const [active, setActive] = useState(true);
 
   const checkWinner = () => {
-    // if (board[0] === board[1] && board[1] === board[2] && board[0] !== '') {
-    //   return board[0];
-    // } else {
-    //   return;
-    // }
     const winConditions = [
       [0, 1, 2],
       [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
     ];
-    let winner = null;
-    if (
-      winConditions.some((condition) => {
-        const [a, b, c] = condition;
-        if (board[a] === board[b] && board[b] === board[c] && board[a] !== '') {
-          winner = board[a];
-          return true;
-        }
-      })
-    ) {
-      return winner;
+
+    for (const condition of winConditions) {
+      const [a, b, c] = condition;
+      if (board[a] === board[b] && board[b] === board[c] && board[a] !== '') {
+        return board[a];
+      }
     }
+
+    return;
   };
 
   const checkGameStatus = () => {
@@ -39,18 +37,19 @@ const GameProvider = ({ children }) => {
     if (board.every((tileContent) => tileContent === '')) {
       return;
     }
+    //check for winner
+    const winner = checkWinner();
+    if (winner) {
+      setGameMessage(`${winner} won!`);
+      setActive(false);
+      return;
+    }
     //check for cats game
     if (board.every((tileContent) => tileContent !== '')) {
       //   console.log('cat');
       setGameMessage("Cat's Game");
       setActive(false);
       return;
-    }
-    //check for winner
-    const winner = checkWinner();
-    if (winner) {
-      setGameMessage(`${winner} won!`);
-      setActive(false);
     }
     // return;
   };
