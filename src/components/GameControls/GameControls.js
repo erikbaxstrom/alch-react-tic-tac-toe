@@ -7,7 +7,6 @@ export default function GameControls() {
   return (
     <div>
       <p>{gameMessage}</p>
-      {/* <button className={active ? 'hidden' : ''}>Restart Game</button> */}
       <button className={`${active && 'hidden'}`} onClick={resetClickHandler}>
         Restart Game
       </button>

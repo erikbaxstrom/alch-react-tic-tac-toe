@@ -3,7 +3,7 @@ import { useState, createContext, useContext, useEffect } from 'react';
 const GameContext = createContext();
 
 const GameProvider = ({ children }) => {
-  const [board, setBoard] = useState(['', '', '', '', '', '', '', '', '']);
+  const [board, setBoard] = useState(Array(9).fill(''));
   const [currentPlayer, setCurrentPlayer] = useState('X');
   const [gameMessage, setGameMessage] = useState("X's turn. Click to start.");
   const [active, setActive] = useState(true);
@@ -19,49 +19,35 @@ const GameProvider = ({ children }) => {
       [0, 4, 8],
       [2, 4, 6],
     ];
-
     for (const condition of winConditions) {
       const [a, b, c] = condition;
       if (board[a] === board[b] && board[b] === board[c] && board[a] !== '') {
         return board[a];
       }
     }
-
     return;
   };
 
   const checkGameStatus = () => {
     if (!active) return;
-    // console.log('checking game status');
-    //check for new game
-    if (board.every((tileContent) => tileContent === '')) {
-      return;
-    }
     //check for winner
     const winner = checkWinner();
     if (winner) {
       setGameMessage(`${winner} won!`);
       setActive(false);
-      return;
+      //   return;
     }
     //check for cats game
-    if (board.every((tileContent) => tileContent !== '')) {
-      //   console.log('cat');
+    if (!board.includes('')) {
       setGameMessage("Cat's Game");
       setActive(false);
       return;
     }
-    // return;
   };
 
   checkGameStatus();
 
-  //   useEffect(() => {
-  //     setGameMessage(`${currentPlayer} Turn`);
-  //   }, [currentPlayer]);
-
   const tileClickHandler = (index) => {
-    // console.log('handling click on', index);
     // if the tile is filled, return
     if (board[index] !== '') {
       return;
@@ -74,10 +60,8 @@ const GameProvider = ({ children }) => {
     const newBoard = [...board];
     newBoard[index] = currentPlayer;
     setBoard(newBoard);
-    // console.log('put', currentPlayer, 'in', index);
 
     if (!active) {
-      //   console.log('inactive game. returning');
       return;
     }
     // switch player
@@ -88,13 +72,10 @@ const GameProvider = ({ children }) => {
       setCurrentPlayer('X');
       setGameMessage("X's Turn");
     }
-
-    // console.log('Message set to', currentPlayer);
   };
 
   const resetClickHandler = () => {
-    // console.log('resetting game');
-    setBoard(['', '', '', '', '', '', '', '', '']);
+    setBoard(Array(9).fill(''));
     setCurrentPlayer('X');
     setGameMessage("X's Turn");
     setActive(true);
